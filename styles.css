@@ -1,7 +1,121 @@
-.header {
-  font-family: 'Roboto Slab', serif;
+* {
+  box-sizing: border-box;
 }
 
 .body{
   font-family: 'Open Sans', sans-serif;
+}
+
+.header {
+  font-family: 'Roboto Slab', serif;
+  background-color: #E5F3F2;
+  height: 30vh;
+  text-align: center;
+  margin-top: 0px;
+}
+
+.title-input,
+.body-input,
+.search-input {
+  display: block;
+  width: 60%;
+  margin: auto;
+  margin-top: 20px;
+  border: 2px solid #D1D3D4;
+  height: 40px;
+  color: #939598;
+
+}
+
+.title {
+  color: #00A79D;
+  padding-top: 20px;
+  margin-top: 0px;
+  font-size: 45px;
+}
+
+.box {
+  color: #6D6E71;
+}
+
+.save-button {
+  background-color: #00A79D;
+  color: #FFFFFF;
+  display: block;
+  width: 60%;
+  margin: auto;
+  margin-top: 20px;
+  height: 40px;
+  border: none;
+}
+
+.save-button:hover {
+  background-color: #045E55;
+}
+
+.search-input
+
+p {
+  width: 100%;
+  color: #939598;
+}
+
+.idea-text {
+  color: #939598;
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 0px;
+}
+
+.quality {
+  color: #6D6E71;
+}
+
+hr {
+  border-top: 2px solid #D1D3D4;
+  width: 100%;
+}
+/*.idea-container {
+  display:
+}*/
+
+.idea-card {
+  display: flex;
+  flex-wrap: wrap;
+  width: 60%;
+  margin: auto;
+  margin-top: 15px;
+}
+
+.card-top {
+  justify-content: space-between;
+  width: 100%;
+  display: flex;
+  font-family: 'Roboto Slab', serif;
+  color: #6D6E71;
+  margin-bottom: 0px;
+}
+
+.card-bottom {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.delete {
+  right: 0px;
+  align-self: center;
+}
+
+.quality,
+.up-vote,
+.down-vote {
+  padding-right: 15px;
+}
+
+img {
+  height: 20px;
+}
+
+img:hover {
+
 }
