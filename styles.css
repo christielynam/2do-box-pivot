@@ -3,13 +3,14 @@
 }
 
 .body{
+  max-width: 1500px
   font-family: 'Open Sans', sans-serif;
 }
 
 .header {
   font-family: 'Roboto Slab', serif;
   background-color: #E5F3F2;
-  height: 30vh;
+  height: 40vh;
   text-align: center;
   margin-top: 0px;
 }
@@ -22,9 +23,8 @@
   margin: auto;
   margin-top: 20px;
   border: 2px solid #D1D3D4;
-  height: 40px;
+  height: 15%;
   color: #939598;
-
 }
 
 .title {
@@ -43,17 +43,14 @@
   color: #FFFFFF;
   display: block;
   width: 60%;
-  margin: auto;
-  margin-top: 20px;
-  height: 40px;
+  margin: 15px auto;
+  height: 15%;
   border: none;
 }
 
 .save-button:hover {
   background-color: #045E55;
 }
-
-.search-input
 
 p {
   width: 100%;
@@ -116,6 +113,48 @@ img {
   height: 20px;
 }
 
-img:hover {
+.delete-hover,
+.down-vote-hover,
+.up-vote-hover {
+  display: none;
+}
 
+
+/*******************************
+         media query @ 450px
+*******************************/
+
+@media (max-width: 450px) {
+
+  .header {
+    height: 60vh;
+  }
+
+  .title-input,
+  .search-input {
+    width: 80%;
+    height: 10%;
+    margin-top: 10px;
+  }
+
+
+  .body-input {
+    width: 80%;
+    height: 30%;
+    align-items: flex-start;
+  }
+
+  .save-button {
+    width: 80%;
+    height: 10%
+    margin-top: 10px;
+  }
+
+  .search-input {
+    height: 10%;
+  }
+
+  .idea-card {
+    width: 80%
+  }
 }
