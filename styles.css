@@ -27,6 +27,10 @@
   color: #939598;
 }
 
+.search-input {
+  height: 50px;
+}
+
 .title {
   color: #00A79D;
   padding-top: 20px;
