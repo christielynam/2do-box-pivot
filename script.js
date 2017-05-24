@@ -1,6 +1,11 @@
 //*********************Variables***************************//
+var ideaTitle = $('.title-input').val();
+var ideaBody = $('.body-input').val();
+var newIdea = {title: ideaTitle, body: ideaBody};
 var ideaList = $('.idea-container');
 var ideaArray = []
+
+
 
 //*********************EVENT LISTENERS**********************//
 
@@ -69,17 +74,17 @@ function buildNewCard (title, body){
 function addToLocal(idea){
   var stringifiedIdea = JSON.stringify(ideaArray);
   console.log(stringifiedIdea)
-  localStorage.setItem('ideaArray', stringifiedIdea);
+  localStorage.setItem('ideaArray', JSON.stringify(ideaArray));
 };
 
 
 // get shit back from JSON
   function getIdeasFromStorage () {
-    // console.log(localStorage.getItem('ideaArray'))
+    console.log(localStorage.getItem('ideaArray'))
     if (localStorage.getItem('ideaArray')){
-      var retrieve = JSON.parse(localStorage.getItem('ideaArray'));
-      console.log("loading ideas ", retrieve)
-      retrieve.forEach(function(element){
+      var getShit = JSON.parse(localStorage.getItem('ideaArray'));
+      console.log("loading ideas ", getShit)
+      getShit.forEach(function(element){
       var ideaNode = buildNewCard(element.title, element.body);
       ideaList.prepend(ideaNode);
       })
