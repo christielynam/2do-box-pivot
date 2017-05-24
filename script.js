@@ -1,11 +1,6 @@
 //*********************Variables***************************//
-var ideaTitle = $('.title-input').val();
-var ideaBody = $('.body-input').val();
-var newIdea = {title: ideaTitle, body: ideaBody};
 var ideaList = $('.idea-container');
 var ideaArray = []
-
-
 
 //*********************EVENT LISTENERS**********************//
 
@@ -20,43 +15,28 @@ $(document).on('input', function() {
 
 // on save button click, build a new card
 $('.save-button').on('click', function() {
-  var titleInput = $('.title-input').val();
-  var bodyInput = $('.body-input').val();
-  var newIdea = new IdeaConstructor(titleInput, bodyInput);
-  addToLocal(newIdea);
   buildNewCard(newIdea);
+  addToLocal(newIdea);
   reset();
 });
 
 
+//***************Functions***********************/
+
+//constructor function for creating new objects to save in localStorage
 function IdeaConstructor(title, body){
   this.id = Date.now();
   this.title = title;
   this.body = body;
   this.quality = 'swill';
-  ideaArray.push(this);
 }
 
-function enableSaveButton()  {
-var ideaTitle = $('.title-input').val();
-var ideaBody = $('.body-input').val();
-  if (ideaTitle === "" || ideaBody === "") {
-    $('.save-button').prop('disabled', true)
-  } else {$('.save-button').prop('disabled', false)
-}
-}
-
-function reset(){
-  $('.title-input').val('');
-  $('.body-input').val('');
-  $('.save-button').prop('disabled', true);
-}
-
-function buildNewCard (idea){
-  var ideaTitle = $('.title-input').val();
-  var ideaBody = $('.body-input').val();
+//build a Card
+function buildNewCard (title, body){
+  var ideaTitle = $('.title-input').val() || title;
+  var ideaBody = $('.body-input').val() || body;
   var ideaID = Date.now();
-  var newIdea = {id: ideaID, title: ideaTitle, body: ideaBody}
+  var newIdea = new IdeaConstructor(ideaTitle, ideaBody);
   $('.idea-container').prepend(`
     <article class="idea-card" id="${ideaID}">
       <div class="card-top">
@@ -75,52 +55,54 @@ function buildNewCard (idea){
       <hr>
     </article>
     `)
+    ideaArray.push(newIdea);
   };
 
-//check Storage
-function checkStorage () {
-  var stringifiedArr = localStorage.getItem(ideaArray);
-  ideaArray = JSON.parse(stringifiedArr) || [];
-  console.log(ideaArray)
-}
+// //check Storage
+// function checkStorage () {
+//   ideaArray = JSON.parse(stringifiedArr) || [];
+//   var stringifiedArr = localStorage.getItem(ideaArray);
+//   console.log(ideaArray);
+// }
 
 //add to localStorage
 function addToLocal(idea){
-  // var ideaTitle = $('.title-input').val();
-  // var ideaBody = $('.body-input').val();
-  // var ideaID = Date.now();
-  // var newIdea = ideaID, ideaTitle, ideaBody;
-  checkStorage();
-  ideaArray.push(idea);
-//stringify that shit
-//   var stringifiedIdea = JSON.stringify(ideaArray);
-//   console.log(stringifiedIdea)
-// //add that shit to localStorage
-  localStorage.setItem('ideaArray', JSON.stringify(ideaArray));
-  checkStorage()
+  var stringifiedIdea = JSON.stringify(ideaArray);
+  console.log(stringifiedIdea)
+  localStorage.setItem('ideaArray', stringifiedIdea);
 };
 
 
-// function updateIdeaArray(boxID, updatedText, property){
-//   allIdeas.forEach(function(idea, index) {
-//       if (idea.id === boxID) {
-//         idea[property] = updatedText;
-//       }
-//   });
-//   localStorage.setItem('allIdeas', JSON.stringify(allIdeas));
-// }
 // get shit back from JSON
   function getIdeasFromStorage () {
-    if (localStorage.getItem('idea', stringifiedIdea)){
-      var stringifiedIdea = JSON.stringify(ideaArray);
-      var getShit = JSON.parse(localStorage.getItem('idea'));
-      console.log("loading ideas ", stringifiedIdea)
-      getShit.forEach(function(idea, index){
-      var ideaNode = buildNewCard(getShit);
+    // console.log(localStorage.getItem('ideaArray'))
+    if (localStorage.getItem('ideaArray')){
+      var retrieve = JSON.parse(localStorage.getItem('ideaArray'));
+      console.log("loading ideas ", retrieve)
+      retrieve.forEach(function(element){
+      var ideaNode = buildNewCard(element.title, element.body);
       ideaList.prepend(ideaNode);
       })
   } else {console.log('nothing here bitch')}
 };
+
+//enable the save button
+function enableSaveButton()  {
+var ideaTitle = $('.title-input').val();
+var ideaBody = $('.body-input').val();
+  if (ideaTitle === "" || ideaBody === "") {
+    $('.save-button').prop('disabled', true)
+  } else {$('.save-button').prop('disabled', false)
+}
+}
+
+//reset input fields
+function reset(){
+  $('.title-input').val('');
+  $('.body-input').val('');
+  $('.save-button').prop('disabled', true);
+}
+
 
 //**********************Functions**************************//
 
