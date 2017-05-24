@@ -6,6 +6,25 @@ var myIdeas = []
 
 //*********************EVENT LISTENERS**********************//
 
+$(document).on('input', function() {
+  enableEnterButton();
+  })
+
+
+function enableEnterButton()  {
+var ideaTitle = $('.title-input').val();
+var ideaBody = $('.body-input').val();
+  if (ideaTitle === "" || ideaBody === "") {
+    $('.save-button').prop('disabled', true)
+  } else {$('.save-button').prop('disabled', false)
+}
+}
+
+
+
+
+
+
 //create new card on button click
 // $('.save-button').on('click', function(){
 //   newIdeaCard();
