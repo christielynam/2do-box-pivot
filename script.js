@@ -3,8 +3,8 @@ var ideaTitle = $('.title-input').val();
 var ideaBody = $('.body-input').val();
 var newIdea = {title: ideaTitle, body: ideaBody};
 var ideaList = $('.idea-container');
-var ideaArray = []
-
+var ideaArray = [];
+var counter = 0;
 
 
 //*********************EVENT LISTENERS**********************//
@@ -25,6 +25,41 @@ $('.save-button').on('click', function() {
   reset();
 });
 
+// on up-vote click
+$('.idea-container').on('click', '.up-vote, .down-vote', function() {
+  if ($(this).prop('class') === 'up-vote') {
+    counter++;
+  } else {
+    counter--;
+  }
+  if(counter >= 2) {
+    $('.up-vote').prop("disabled", true);
+    $('.down-vote').prop("disabled", false);
+  }
+  if(counter === 1) {
+    $('.up-vote').prop("disabled", false);
+    $('.down-vote').prop("disabled", false);
+  }
+  else if (counter === 0) {
+    $('.up-vote').prop("disabled", false);
+    $('.down-vote').prop("disabled", true);
+  }
+  console.log(counter)
+});
+
+//on down-vote click
+// $('.idea-container').on('click', '.down-vote', function() {
+//   counter --;
+//   if(counter <= 0) {
+//     $('.down-vote').prop("disabled", true);
+//   }
+//   else if (counter > 0) {
+//     $('.down-vote').prop("disabled", false)
+//   }
+//   console.log(counter)
+// });
+
+
 
 //***************Functions***********************/
 
@@ -33,13 +68,25 @@ function IdeaConstructor(title, body){
   this.id = Date.now();
   this.title = title;
   this.body = body;
-  this.quality = 'swill';
+  this.quality = "swill";
 }
+
+IdeaConstructor.prototype.newQuality = function(){
+  if (counter === 0){
+    this.quality = "swill";
+  } else if (counter === 1){
+    this.quality = "plausible";
+  } else if (counter === 2){
+    this.quality = "genius";
+  }
+  }
+
 
 //build a Card
 function buildNewCard (title, body){
   var ideaTitle = $('.title-input').val() || title;
   var ideaBody = $('.body-input').val() || body;
+  var ideaQuality = "swill";
   var newIdea = new IdeaConstructor(ideaTitle, ideaBody);
   $('.idea-container').prepend(`
     <article class="idea-card">
@@ -51,7 +98,7 @@ function buildNewCard (title, body){
         <div class="card-bottom">
           <button class="up-vote"></button>
           <button class="down-vote icon"></button>
-          <p class="quality">quality: swill</p>
+          <p class="quality">quality: ${ideaQuality}</p>
         </div>
         <hr>
       </article>
