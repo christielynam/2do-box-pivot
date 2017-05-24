@@ -40,25 +40,21 @@ function IdeaConstructor(title, body){
 function buildNewCard (title, body){
   var ideaTitle = $('.title-input').val() || title;
   var ideaBody = $('.body-input').val() || body;
-  var ideaID = Date.now();
   var newIdea = new IdeaConstructor(ideaTitle, ideaBody);
   $('.idea-container').prepend(`
-    <article class="idea-card" id="${ideaID}">
-      <div class="card-top">
-        <h2>${ideaTitle}</h2>
-        <img src="assets/delete.svg" class="delete icon">
-        <img src="assets/delete-hover.svg" class="delete-hover">
-      </div>
-      <p class="idea-text">${ideaBody}</p>
-      <div class="card-bottom">
-        <img src="assets/upvote.svg" class="up-vote icon">
-        <img src="assets/upvote-hover.svg" class="up-vote-hover icon">
-        <img src="assets/downvote.svg" class="down-vote icon">
-        <img src="assets/downvote-hover.svg" class="down-vote-hover icon" class="down-vote-hover"
-        <p class="quality">quality: swill</p>
-      </div>
-      <hr>
-    </article>
+    <article class="idea-card">
+        <div class="card-top">
+          <h2>${ideaTitle}</h2>
+          <button class="delete icon"></button>
+        </div>
+        <p class="idea-text">${ideaBody}</p>
+        <div class="card-bottom">
+          <button class="up-vote"></button>
+          <button class="down-vote icon"></button>
+          <p class="quality">quality: swill</p>
+        </div>
+        <hr>
+      </article>
     `)
     ideaArray.push(newIdea);
   };
@@ -74,7 +70,7 @@ function buildNewCard (title, body){
 function addToLocal(idea){
   var stringifiedIdea = JSON.stringify(ideaArray);
   console.log(stringifiedIdea)
-  localStorage.setItem('ideaArray', JSON.stringify(ideaArray));
+  localStorage.setItem('ideaArray', stringifiedIdea);
 };
 
 

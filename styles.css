@@ -113,15 +113,47 @@ hr {
   padding-right: 15px;
 }
 
-img {
-  height: 20px;
+button {
+  border: none;
+  background-color: transparent;
 }
 
-.delete-hover,
-.down-vote-hover,
-.up-vote-hover {
-  display: none;
+.delete {
+  background-image: url("assets/delete.svg");
+  right: 0px;
+  align-self: center;
+  background-repeat: no-repeat;
+  border: none;
+  height: 25px;
+  width: 25px;
 }
+.delete:hover {
+  background-image: url("assets/delete-hover.svg");
+}
+
+.up-vote {
+  background-image: url("assets/upvote.svg");
+  border: none;
+  height: 25px;
+  width: 25px;
+  background-repeat: no-repeat;
+}
+.up-vote:hover {
+  background-image: url("assets/upvote-hover.svg");
+}
+
+.down-vote {
+  background-image: url("assets/downvote.svg");
+  background-repeat: no-repeat;
+  height: 25px !important;
+  width: 25px;
+  margin: 0px 10px;
+  border: none;
+}
+.down-vote:hover{
+  background-image: url("assets/downvote-hover.svg");
+}
+
 
 
 /*******************************
