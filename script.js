@@ -1,4 +1,5 @@
-//*********************Variables***************************//
+//***************************** Variables *****************************
+//*********************************************************************
 var ideaTitle = $('.title-input').val();
 var ideaBody = $('.body-input').val();
 var newIdea = {title: ideaTitle, body: ideaBody};
@@ -6,18 +7,18 @@ var ideaList = $('.idea-container');
 var ideaArray = [];
 var counter = 0
 
-
-//*********************EVENT LISTENERS**********************//
+//*********************************************************************
+//*************************  EVENT LISTENERS  *************************
+//*********************************************************************
 
 $(document).on('input', function() {
   enableSaveButton();
   })
 
 // on page load, grab localStorage
-    $(document).ready(function() {
-      getIdeasFromStorage();
-      // checkStorage();
-  });
+$(document).ready(function() {
+  getIdeasFromStorage();
+});
 
 // on save button click, build a new card
 $('.save-button').on('click', function() {
@@ -29,12 +30,12 @@ $('.save-button').on('click', function() {
 //Up-Vote Event
 $('.idea-container').on('click', '.up-vote', function() {
   upvote();
-  // saveUpvote();
 });
 
 //Down-Vote Event
 $('.idea-container').on('click', '.down-vote', function() {
   downvote();
+  addToLocal();
 });
 
 //Delete idea cards from DOM and localStorage
@@ -50,25 +51,11 @@ $('.idea-container').on('click', '.delete', function() {
   });
   var indivdualCard = document.getElementById(cardID);
   indivdualCard.remove();
-})
+});
 
-
-
-//on down-vote click
-// $('.idea-container').on('click', '.down-vote', function() {
-//   counter --;
-//   if(counter <= 0) {
-//     $('.down-vote').prop("disabled", true);
-//   }
-//   else if (counter > 0) {
-//     $('.down-vote').prop("disabled", false)
-//   }
-//   console.log(counter)
-// });
-
-
-
-//***************Functions***********************/
+//*********************************************************************
+//***************************  Functions  *****************************
+//*********************************************************************
 
 //constructor function for creating new objects to save in localStorage
 function IdeaConstructor(title, body, quality){
@@ -78,14 +65,12 @@ function IdeaConstructor(title, body, quality){
   this.quality = "swill";
 }
 
-
 //build a Card
 function buildNewCard (title, body){
   var ideaTitle = $('.title-input').val() || title;
   var ideaBody = $('.body-input').val() || body;
   var ideaID = Date.now();
   var newIdea = new IdeaConstructor(ideaTitle, ideaBody);
-  // var ideaQuality = "swill";
   $('.idea-container').prepend(`
     <article class="idea-card" id="${ideaID}">
         <div class="card-top">
@@ -104,28 +89,20 @@ function buildNewCard (title, body){
     ideaArray.push(newIdea);
   };
 
-//check Storage
-function checkStorage () {
-  var stringifiedArr = localStorage.getItem(ideaArray);
-  ideaArray = JSON.parse(stringifiedArr) || [];
-  console.log('check storage function: ' + ideaArray);
-}
-
-//add to localStorage
+//add object to localStorage function
 function addToLocal(idea){
   var stringifiedIdea = JSON.stringify(ideaArray);
   console.log(stringifiedIdea)
   localStorage.setItem('ideaArray', stringifiedIdea);
 };
 
-
-// get shit back from JSON
+// get object back from JSON function
   function getIdeasFromStorage () {
     console.log(localStorage.getItem('ideaArray'))
     if (localStorage.getItem('ideaArray')){
-      var getShit = JSON.parse(localStorage.getItem('ideaArray'));
-          console.log("loading ideas ", getShit)
-      getShit.forEach(function(element){
+      var retrieve = JSON.parse(localStorage.getItem('ideaArray'));
+          console.log("loading ideas ", retrieve)
+      retrieve.forEach(function(element){
       var ideaNode = buildNewCard(element.title, element.body);
       ideaList.prepend(ideaNode);
       })
@@ -142,27 +119,6 @@ function upvote(){
   }
 }
 
-// save upvote in localStorage
-// function saveUpvote(){
-//   var uniqueTitle = document.querySelector('h2').value;
-//     console.log(uniqueTitle);
-//   var uniqueBody = document.querySelector('.idea-text');
-//     console.log(uniqueBody);
-//   var uniqueQuality = document.querySelector('.quality');
-//     console.log(uniqueQuality);
-//   var newIdea = new IdeaConstructor(uniqueTitle, uniqueBody, uniqueQuality);
-//   ideaArray.push(newIdea);
-// };
-
-  // ideaArray.forEach(function(idea, index){
-  //   if (idea.quality === "swill"){
-  //     $(uniqueQuality).text('plausible');
-  //   }if (idea.quality === 'plausible'){
-  //     $(uniqueQuality).text('genius');
-  //   }
-  // })
-// };
-
 //downvote button function
 function downvote(){
   var qualityInput = $('.quality')
@@ -173,7 +129,22 @@ function downvote(){
   }
 }
 
-//enable the save button
+//Search Bar Function
+function search() {
+  var inputText = $('.search-input').val().toUpperCase();
+  var hideArray = ideaArray.filter(function(idea){
+    if (IdeaConstructor.title.toUpperCase().indexOf(inputText) < 0 && IdeaConstructo.body.toUpperCase().indexOf(inputText) < 0) {
+      return idea;
+    } else {
+      $('#' + idea.id).closest('.box').css('display', 'block');
+    }
+  });
+  hideArray.forEach(function(idea) {
+    $('#' + idea.id).closest('.box').css('display', 'none');
+  });
+}
+
+//enable the save button function
 function enableSaveButton()  {
 var ideaTitle = $('.title-input').val();
 var ideaBody = $('.body-input').val();
@@ -183,9 +154,49 @@ var ideaBody = $('.body-input').val();
 }
 }
 
-//reset input fields
+//reset input fields function
 function reset(){
   $('.title-input').val('');
   $('.body-input').val('');
   $('.save-button').prop('disabled', true);
 }
+
+//*********************************************************************
+//******************  The Graveyard of Failed Ideas *******************
+//*********************************************************************
+
+
+//failed down-vote click
+// $('.idea-container').on('click', '.down-vote', function() {
+//   counter --;
+//   if(counter <= 0) {
+//     $('.down-vote').prop("disabled", true);
+//   }
+//   else if (counter > 0) {
+//     $('.down-vote').prop("disabled", false)
+//   }
+//   console.log(counter)
+// });
+
+//failed attempt to save upvote
+// function saveUpvote(){
+//   var uniqueQuality = document.querySelector('.quality');
+//   var uniqueTitle = document.querySelector('h2')
+//   var uniqueBody = document.querySelector('.idea-tet')
+//   console.log($(uniqueQuality).text());
+
+  // ideaArray.forEach(function(idea, index){
+  //   if (idea.quality === "swill"){
+  //     $(uniqueQuality).text('plausible');
+  //   }if (idea.quality === 'plausible'){
+  //     $(uniqueQuality).text('genius');
+  //   }
+  // })
+// };
+
+// // failed idea to check Storage on page load
+// function checkStorage () {
+//   var stringifiedArr = localStorage.getItem(ideaArray);
+//   ideaArray = JSON.parse(stringifiedArr) || [];
+//   console.log('check storage function: ' + ideaArray);
+// }
