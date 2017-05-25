@@ -4,16 +4,11 @@ This is a website to organize ideas.
 
 ## Usage
 
-##### To Save an Idea
- 1. Input the website title in top input field. This is **Required**.
- 2. Input the website's *valid* URL following the prepopulated "https://" This is **Required**.
- 3. Click Enter to save the link as a new bookmark.
- 4. Restart process to add more bookmarks.
+This webpage is designed for the user to store and edit ideas. They are stored with a title of the idea and with the body or description of the idea. The quality of the the idea can then be modified to display if it's a good idea(plausible), a shit idea(swill) or an excellent idea(genius). The user can add as many ideas as they can. And when they want to come back to an idea, the webpage stores their ideas.
 
-##### To Organize Links
- 1. To mark a bookmark as already read, click 'read'
- 2. To delete a bookmark, click 'delete'
- 3. To delete all read bookmarks, click 'Clear Read Bookmarks'
+The contents of the idea are stored in the local storage for the user. For this to be possible, the contents must be put into a string to be stored. For the values of the idea to be returned accurately and correctly, first we spliced the ID from the array. From there, we could bring back the title and body of the idea and place them back into the idea card. Unfortunately we were unable to return the quality of the idea.
+
+Another aspect of the project we were unable to finish, was the search bar. For the creative users with countless ideas at their disposal, they could search through the webpage for the idea they wished to edit or check. 
 
 ## Credits
 
