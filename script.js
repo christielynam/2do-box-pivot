@@ -4,7 +4,7 @@ var ideaBody = $('.body-input').val();
 var newIdea = {title: ideaTitle, body: ideaBody};
 var ideaList = $('.idea-container');
 var ideaArray = [];
-var counter = 0;
+var counter = 0
 
 
 //*********************EVENT LISTENERS**********************//
@@ -25,14 +25,14 @@ $('.save-button').on('click', function() {
   reset();
 });
 
-// on up-vote click
+// on up-vote or down-vote click
 $('.idea-container').on('click', '.up-vote, .down-vote', function() {
   if ($(this).prop('class') === 'up-vote') {
     counter++;
   } else {
     counter--;
   }
-  if(counter >= 2) {
+  if(counter === 2) {
     $('.up-vote').prop("disabled", true);
     $('.down-vote').prop("disabled", false);
   }
@@ -45,7 +45,22 @@ $('.idea-container').on('click', '.up-vote, .down-vote', function() {
     $('.down-vote').prop("disabled", true);
   }
   console.log(counter)
+  newQuality();
 });
+
+$('.idea-container').on('click', '.delete', function() {
+  var boxID = parseInt($(this).closest('.idea-card').attr('id'));
+  console.log(boxID)
+  ideaArray.forEach(function(idea, index){
+    if (idea.id === boxID) {
+      ideaArray.splice(index, 1);
+      console.log(ideaArray);
+    }
+    localStorage.setItem('ideaArray', JSON.stringify(ideaArray));
+  });
+  var indivdualCard = document.getElementById(boxID);
+  indivdualCard.remove();
+})
 
 //on down-vote click
 // $('.idea-container').on('click', '.down-vote', function() {
@@ -71,13 +86,14 @@ function IdeaConstructor(title, body){
   this.quality = "swill";
 }
 
-IdeaConstructor.prototype.newQuality = function(){
+function newQuality() {
   if (counter === 0){
     this.quality = "swill";
   } else if (counter === 1){
     this.quality = "plausible";
   } else if (counter === 2){
     this.quality = "genius";
+
   }
   }
 
@@ -86,10 +102,11 @@ IdeaConstructor.prototype.newQuality = function(){
 function buildNewCard (title, body){
   var ideaTitle = $('.title-input').val() || title;
   var ideaBody = $('.body-input').val() || body;
-  var ideaQuality = "swill";
+  var ideaID = Date.now();
   var newIdea = new IdeaConstructor(ideaTitle, ideaBody);
+  var ideaQuality = "swill";
   $('.idea-container').prepend(`
-    <article class="idea-card">
+    <article class="idea-card" id="${ideaID}">
         <div class="card-top">
           <h2>${ideaTitle}</h2>
           <button class="delete icon"></button>
@@ -98,7 +115,7 @@ function buildNewCard (title, body){
         <div class="card-bottom">
           <button class="up-vote"></button>
           <button class="down-vote icon"></button>
-          <p class="quality">quality: ${ideaQuality}</p>
+          <p>quality: <span class="quality">${ideaQuality}</span></p>
         </div>
         <hr>
       </article>
