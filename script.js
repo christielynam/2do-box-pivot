@@ -16,6 +16,7 @@ $(document).on('input', function() {
 // on page load, grab localStorage
     $(document).ready(function() {
       getIdeasFromStorage();
+      // checkStorage();
   });
 
 // on save button click, build a new card
@@ -25,42 +26,33 @@ $('.save-button').on('click', function() {
   reset();
 });
 
-// on up-vote or down-vote click
-$('.idea-container').on('click', '.up-vote, .down-vote', function() {
-  if ($(this).prop('class') === 'up-vote') {
-    counter++;
-  } else {
-    counter--;
-  }
-  if(counter === 2) {
-    $('.up-vote').prop("disabled", true);
-    $('.down-vote').prop("disabled", false);
-  }
-  if(counter === 1) {
-    $('.up-vote').prop("disabled", false);
-    $('.down-vote').prop("disabled", false);
-  }
-  else if (counter === 0) {
-    $('.up-vote').prop("disabled", false);
-    $('.down-vote').prop("disabled", true);
-  }
-  console.log(counter)
-  newQuality();
+//Up-Vote Event
+$('.idea-container').on('click', '.up-vote', function() {
+  upvote();
+  // saveUpvote();
 });
 
+//Down-Vote Event
+$('.idea-container').on('click', '.down-vote', function() {
+  downvote();
+});
+
+//Delete idea cards from DOM and localStorage
 $('.idea-container').on('click', '.delete', function() {
-  var boxID = parseInt($(this).closest('.idea-card').attr('id'));
-  console.log(boxID)
+  var cardID = parseInt($(this).closest('.idea-card').attr('id'));
+  console.log(cardID)
   ideaArray.forEach(function(idea, index){
-    if (idea.id === boxID) {
+    if (idea.id === cardID) {
       ideaArray.splice(index, 1);
       console.log(ideaArray);
     }
     localStorage.setItem('ideaArray', JSON.stringify(ideaArray));
   });
-  var indivdualCard = document.getElementById(boxID);
+  var indivdualCard = document.getElementById(cardID);
   indivdualCard.remove();
 })
+
+
 
 //on down-vote click
 // $('.idea-container').on('click', '.down-vote', function() {
@@ -79,23 +71,12 @@ $('.idea-container').on('click', '.delete', function() {
 //***************Functions***********************/
 
 //constructor function for creating new objects to save in localStorage
-function IdeaConstructor(title, body){
+function IdeaConstructor(title, body, quality){
   this.id = Date.now();
   this.title = title;
   this.body = body;
   this.quality = "swill";
 }
-
-function newQuality() {
-  if (counter === 0){
-    this.quality = "swill";
-  } else if (counter === 1){
-    this.quality = "plausible";
-  } else if (counter === 2){
-    this.quality = "genius";
-
-  }
-  }
 
 
 //build a Card
@@ -104,7 +85,7 @@ function buildNewCard (title, body){
   var ideaBody = $('.body-input').val() || body;
   var ideaID = Date.now();
   var newIdea = new IdeaConstructor(ideaTitle, ideaBody);
-  var ideaQuality = "swill";
+  // var ideaQuality = "swill";
   $('.idea-container').prepend(`
     <article class="idea-card" id="${ideaID}">
         <div class="card-top">
@@ -115,7 +96,7 @@ function buildNewCard (title, body){
         <div class="card-bottom">
           <button class="up-vote"></button>
           <button class="down-vote icon"></button>
-          <p>quality: <span class="quality">${ideaQuality}</span></p>
+          <p>quality: <span class="quality">swill</span></p>
         </div>
         <hr>
       </article>
@@ -123,12 +104,12 @@ function buildNewCard (title, body){
     ideaArray.push(newIdea);
   };
 
-// //check Storage
-// function checkStorage () {
-//   ideaArray = JSON.parse(stringifiedArr) || [];
-//   var stringifiedArr = localStorage.getItem(ideaArray);
-//   console.log(ideaArray);
-// }
+//check Storage
+function checkStorage () {
+  var stringifiedArr = localStorage.getItem(ideaArray);
+  ideaArray = JSON.parse(stringifiedArr) || [];
+  console.log('check storage function: ' + ideaArray);
+}
 
 //add to localStorage
 function addToLocal(idea){
@@ -143,13 +124,54 @@ function addToLocal(idea){
     console.log(localStorage.getItem('ideaArray'))
     if (localStorage.getItem('ideaArray')){
       var getShit = JSON.parse(localStorage.getItem('ideaArray'));
-      console.log("loading ideas ", getShit)
+          console.log("loading ideas ", getShit)
       getShit.forEach(function(element){
       var ideaNode = buildNewCard(element.title, element.body);
       ideaList.prepend(ideaNode);
       })
   } else {console.log('nothing here bitch')}
 };
+
+//upvote button function
+function upvote(){
+  var qualityInput = $('.quality')
+  if (qualityInput.text() === 'swill'){
+    qualityInput.text('plausible');
+  }else if (qualityInput.text() === 'plausible'){
+    qualityInput.text('genius');
+  }
+}
+
+// save upvote in localStorage
+// function saveUpvote(){
+//   var uniqueTitle = document.querySelector('h2').value;
+//     console.log(uniqueTitle);
+//   var uniqueBody = document.querySelector('.idea-text');
+//     console.log(uniqueBody);
+//   var uniqueQuality = document.querySelector('.quality');
+//     console.log(uniqueQuality);
+//   var newIdea = new IdeaConstructor(uniqueTitle, uniqueBody, uniqueQuality);
+//   ideaArray.push(newIdea);
+// };
+
+  // ideaArray.forEach(function(idea, index){
+  //   if (idea.quality === "swill"){
+  //     $(uniqueQuality).text('plausible');
+  //   }if (idea.quality === 'plausible'){
+  //     $(uniqueQuality).text('genius');
+  //   }
+  // })
+// };
+
+//downvote button function
+function downvote(){
+  var qualityInput = $('.quality')
+  if (qualityInput.text() === 'genius'){
+    qualityInput.text('plausible')
+  }else if (qualityInput.text() === 'plausible'){
+    qualityInput.text('swill')
+  }
+}
 
 //enable the save button
 function enableSaveButton()  {
@@ -167,44 +189,3 @@ function reset(){
   $('.body-input').val('');
   $('.save-button').prop('disabled', true);
 }
-
-
-//**********************Functions**************************//
-
-// //function for creating new idea card
-// function newIdeaCard(){
-//   var ideaTitle = $('.title-input').val();
-//   var ideaBody = $('.body-input').val();
-//   var ideaCard = $('.idea-container').prepend(`
-//     <article class="idea-card">
-//       <div class="card-top">
-//         <h2>${ideaTitle}</h2>
-//         <img src="assets/delete.svg" class="delete icon">
-//         <img src="assets/delete-hover.svg" class="delete-hover">
-//       </div>
-//       <p class="idea-text">${ideaBody}</p>
-//       <div class="card-bottom">
-//         <img src="assets/upvote.svg" class="up-vote icon">
-//         <img src="assets/upvote-hover.svg" class="up-vote-hover icon">
-//         <img src="assets/downvote.svg" class="down-vote icon">
-//         <img src="assets/downvote-hover.svg" class="down-vote-hover icon" class="down-vote-hover"
-//         <p class="quality">quality: swill</p>
-//       </div>
-//       <hr>
-//     </article>
-//     `)
-//   };
-
-//******************Local Storage***************************//
-
-
-//
-// var Idea = function(title, body){
-//   this.title = title;
-//   this.body = body;
-// };
-//
-// var stringifiedIdeas = JSON.stringify(ideaTitle)
-// var parsedIdeas = JSON.parse(stringifiedIdeas)
-//
-// localStorage.setItem('ideas', stringifiedIdeas)
