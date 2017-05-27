@@ -1,164 +1,147 @@
-//***************************** Variables *****************************
-//*********************************************************************
-var ideaTitle = $('.title-input').val();
-var ideaBody = $('.body-input').val();
-var newIdea = {title: ideaTitle, body: ideaBody};
-var ideaList = $('.idea-container');
-var ideaArray = [];
-var counter = 0
 
-//*********************************************************************
-//*************************  EVENT LISTENERS  *************************
-//*********************************************************************
+var toDoList = $('.todo-container');
+var toDoArray = [];
 
 $(document).on('input', function() {
   enableSaveButton();
   })
 
-// on page load, grab localStorage
 $(document).ready(function() {
-  getIdeasFromStorage();
+  retrieveLocalStorage();
+  reset();
 });
 
-// on save button click, build a new card
-$('.save-button').on('click', function() {
-  buildNewCard(newIdea);
-  addToLocal(newIdea);
+$('.save-btn').on('click', function() {
+  var id = Date.now();
+  var title = $('.title-input').val();
+  var task = $('.task-input').val();
+  var newToDo = new ToDo(id, title, task);
+  toDoArray.push(newToDo);
+  buildNewCard(newToDo);
+  addToLocal();
   reset();
 });
 
 //Up-Vote Event
-$('.idea-container').on('click', '.up-vote', function() {
+$('.todo-container').on('click', '.up-vote-btn', function() {
   upvote();
 });
 
 //Down-Vote Event
-$('.idea-container').on('click', '.down-vote', function() {
+$('.todo-container').on('click', '.down-vote-btn', function() {
   downvote();
   addToLocal();
 });
 
 //Delete idea cards from DOM and localStorage
-$('.idea-container').on('click', '.delete', function() {
-  var cardID = parseInt($(this).closest('.idea-card').attr('id'));
-  console.log(cardID)
-  ideaArray.forEach(function(idea, index){
-    if (idea.id === cardID) {
-      ideaArray.splice(index, 1);
-      console.log(ideaArray);
+$('.todo-container').on('click', '.delete-btn', deleteToDo);
+
+function deleteToDo(){
+  var card = $(this).closest('.todo-card')[0];
+   toDoArray.forEach(function(todo, index){
+    if (todo.id == card.id) {
+      toDoArray.splice(index, 1);
     }
-    localStorage.setItem('ideaArray', JSON.stringify(ideaArray));
   });
-  var indivdualCard = document.getElementById(cardID);
-  indivdualCard.remove();
-});
+  addToLocal();
+  card.remove();
+}
 
-//*********************************************************************
-//***************************  Functions  *****************************
-//*********************************************************************
 
-//constructor function for creating new objects to save in localStorage
-function IdeaConstructor(title, body, quality){
-  this.id = Date.now();
+function ToDo(id, title, task){
+  this.id = id;
   this.title = title;
-  this.body = body;
-  this.quality = "swill";
+  this.task = task;
+  this.importance = "normal";
 }
 
 //build a Card
-function buildNewCard (title, body){
-  var ideaTitle = $('.title-input').val() || title;
-  var ideaBody = $('.body-input').val() || body;
-  var ideaID = Date.now();
-  var newIdea = new IdeaConstructor(ideaTitle, ideaBody);
-  $('.idea-container').prepend(`
-    <article class="idea-card" id="${ideaID}">
+function buildNewCard(newToDo){
+  var todo = `<article class="todo-card" id="${newToDo.id}">
         <div class="card-top">
-          <h2>${ideaTitle}</h2>
-          <button class="delete icon"></button>
+          <h2 class="card-title">${newToDo.title}</h2>
+          <button class="delete-btn"></button>
         </div>
-        <p class="idea-text">${ideaBody}</p>
+        <p class="task-content">${newToDo.task}</p>
         <div class="card-bottom">
-          <button class="up-vote"></button>
-          <button class="down-vote icon"></button>
-          <p>quality: <span class="quality">swill</span></p>
+          <button class="up-vote-btn"></button>
+          <button class="down-vote-btn"></button>
+          <p id="importance">importance: <span class="importance-level">${newToDo.importnace}</span></p>
         </div>
-        <hr>
-      </article>
-    `)
-    ideaArray.push(newIdea);
+      </article>`;
+
+  $('.todo-container').prepend(todo);
+  // toDoArray.push(todo);
   };
 
 //add object to localStorage function
-function addToLocal(idea){
-  var stringifiedIdea = JSON.stringify(ideaArray);
-  console.log(stringifiedIdea)
-  localStorage.setItem('ideaArray', stringifiedIdea);
+function addToLocal(){
+  var stringifiedToDo = JSON.stringify(toDoArray);
+  //console.log(stringifiedToDo)
+  localStorage.setItem('toDoArray', stringifiedToDo);
 };
 
 // get object back from JSON function
-  function getIdeasFromStorage () {
-    console.log(localStorage.getItem('ideaArray'))
-    if (localStorage.getItem('ideaArray')){
-      var retrieve = JSON.parse(localStorage.getItem('ideaArray'));
-          console.log("loading ideas ", retrieve)
-      retrieve.forEach(function(element){
-      var ideaNode = buildNewCard(element.title, element.body);
-      ideaList.prepend(ideaNode);
-      })
-  } else {console.log('nothing here bitch')}
+  function retrieveLocalStorage() {
+    toDoArray = JSON.parse(localStorage.getItem('toDoArray')) || [];
+    toDoArray.forEach(function(todo) {
+      console.log(todo);
+      buildNewCard(todo);
+  })
+  
 };
 
 //upvote button function
 function upvote(){
-  var qualityInput = $('.quality')
-  if (qualityInput.text() === 'swill'){
-    qualityInput.text('plausible');
-  }else if (qualityInput.text() === 'plausible'){
-    qualityInput.text('genius');
+  var importanceLevel = $('.importance-level')
+  if (importanceLevel.text() === 'swill'){
+    importanceLevel.text('plausible');
+  }else if (importanceLevel.text() === 'plausible'){
+    importanceLevel.text('genius');
   }
 }
 
 //downvote button function
 function downvote(){
-  var qualityInput = $('.quality')
-  if (qualityInput.text() === 'genius'){
-    qualityInput.text('plausible')
-  }else if (qualityInput.text() === 'plausible'){
-    qualityInput.text('swill')
+  var importanceLevel = $('.importance-level')
+  if (importanceLevel.text() === 'genius'){
+    importanceLevel.text('plausible')
+  }else if (importanceLevel.text() === 'plausible'){
+    importanceLevel.text('swill')
   }
 }
 
 //Search Bar Function
-function search() {
-  var inputText = $('.search-input').val().toUpperCase();
-  var hideArray = ideaArray.filter(function(idea){
-    if (IdeaConstructor.title.toUpperCase().indexOf(inputText) < 0 && IdeaConstructo.body.toUpperCase().indexOf(inputText) < 0) {
-      return idea;
-    } else {
-      $('#' + idea.id).closest('.box').css('display', 'block');
-    }
-  });
-  hideArray.forEach(function(idea) {
-    $('#' + idea.id).closest('.box').css('display', 'none');
-  });
-}
+// function search() {
+//   var inputText = $('.search-input').val().toUpperCase();
+//   var hideArray = ideaArray.filter(function(idea){
+//     if (IdeaConstructor.title.toUpperCase().indexOf(inputText) < 0 && IdeaConstructo.body.toUpperCase().indexOf(inputText) < 0) {
+//       return idea;
+//     } else {
+//       $('#' + idea.id).closest('.box').css('display', 'block');
+//     }
+//   });
+//   hideArray.forEach(function(idea) {
+//     $('#' + idea.id).closest('.box').css('display', 'none');
+//   });
+// }
 
 //enable the save button function
 function enableSaveButton()  {
-var ideaTitle = $('.title-input').val();
-var ideaBody = $('.body-input').val();
-  if (ideaTitle === "" || ideaBody === "") {
-    $('.save-button').prop('disabled', true)
-  } else {$('.save-button').prop('disabled', false)
+var title = $('.title-input').val();
+var task = $('.task-input').val();
+  if (title === "" || task === "") {
+    $('.save-btn').prop('disabled', true)
+  } else {$('.save-btn').prop('disabled', false)
 }
 }
 
 //reset input fields function
 function reset(){
   $('.title-input').val('');
-  $('.body-input').val('');
-  $('.save-button').prop('disabled', true);
+  $('.task-input').val('');
+  // $('.save-btn').prop('disabled', true);
+  $('.title-input').focus();
 }
 
 //*********************************************************************

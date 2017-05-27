@@ -3,25 +3,25 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="styles.css" type="text/css" rel="stylesheet">
     <link href="normalize.css" type="text/css" rel="stylesheet">
+    <link href="styles.css" type="text/css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <title>ideabox</title>
+    <title>2DoBox</title>
   </head>
   <body>
-    <section class="header">
-      <h1 class="title">idea<span class="box">box</span></h1>
-      <input class="title-input" placeholder=" Title" />
-      <input class="body-input" placeholder=" Body" />
-      <button class="save-button" disabled="true">save</button>
+    <header>
+      <h1 class="title">2Do<span class="box">Box</span></h1>
+      <input class="title-input" placeholder="Title" />
+      <textarea class="task-input" placeholder="Task"></textarea>
+      <button class="save-btn" disabled="true">save</button>
+    </header>
+    <section class="search-container">
+      <input class="search-input" placeholder="Search" />
     </section>
-    <div class="search-bar">
-      <input class="search-input" placeholder=" Search">
-    </div>
-    <section class="idea-container">
+    <section class="todo-container">
 
-      <!-- <article class="idea-card">
+      <!-- <article class="todo-card">
         <div class="card-top">
           <h2>Example Idea 1</h2>
           <img src="assets/delete.svg" class="delete icon">
@@ -38,10 +38,8 @@
         <hr>
       </article> -->
     </section>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-       integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-       crossorigin="anonymous">
-    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="path/to/your/jquery.min.js"><\/script>')</script>
     <script src="script.js"></script>
   </body>
 </html>

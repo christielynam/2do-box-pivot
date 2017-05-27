@@ -3,12 +3,10 @@
 }
 
 .body{
-  max-width: 1500px
   font-family: 'Open Sans', sans-serif;
 }
 
-.header {
-  font-family: 'Roboto Slab', serif;
+header {
   background-color: #E5F3F2;
   height: 40vh;
   text-align: center;
@@ -16,7 +14,25 @@
 }
 
 .title-input,
-.body-input,
+.task-input,
+.search-input {
+  padding-left: 5px;
+  font-size: 20px;
+}
+
+.task-input {
+  padding-top: 10px;
+  resize: none;
+}
+
+.title,
+.card-title,
+#importance {
+  font-family: 'Roboto Slab', serif;
+}
+
+.title-input,
+.task-input,
 .search-input {
   display: block;
   width: 60%;
@@ -42,7 +58,7 @@
   color: #6D6E71;
 }
 
-.save-button {
+.save-btn {
   background-color: #00A79D;
   color: #FFFFFF;
   display: block;
@@ -50,10 +66,18 @@
   margin: 15px auto;
   height: 15%;
   border: none;
+  font-size: 20px;
+  outline: none;
 }
 
-.save-button:hover {
+.save-btn:hover {
   background-color: #045E55;
+}
+
+.todo-container {
+  width: 60%;
+  display: flex;
+align-items: center; flex-direction: column;
 }
 
 p {
@@ -61,20 +85,20 @@ p {
   color: #939598;
 }
 
-.idea-text {
+.task-content {
   color: #939598;
-  font-family: 'Open Sans', sans-serif;
+  /*font-family: 'Open Sans', sans-serif;*/
   margin-top: 0px;
 }
 
-.quality {
+.importnace {
   color: #6D6E71;
 }
 
-hr {
+/*hr {
   border-top: 2px solid #D1D3D4;
   width: 100%;
-}
+}*/
 /*.idea-container {
   display:
 }*/
@@ -102,14 +126,14 @@ hr {
   width: 100%;
 }
 
-.delete {
+.delete-btn {
   right: 0px;
   align-self: center;
 }
 
 .quality,
-.up-vote,
-.down-vote {
+.up-vote-btn,
+.down-vote-btn {
   padding-right: 15px;
 }
 
@@ -118,7 +142,7 @@ button {
   background-color: transparent;
 }
 
-.delete {
+.delete-btn {
   background-image: url("assets/delete.svg");
   right: 0px;
   align-self: center;
@@ -127,30 +151,30 @@ button {
   height: 25px;
   width: 25px;
 }
-.delete:hover {
+.delete-btn:hover {
   background-image: url("assets/delete-hover.svg");
 }
 
-.up-vote {
+.up-vote-btn {
   background-image: url("assets/upvote.svg");
   border: none;
   height: 25px;
   width: 25px;
   background-repeat: no-repeat;
 }
-.up-vote:hover {
+.up-vote-btn:hover {
   background-image: url("assets/upvote-hover.svg");
 }
 
-.down-vote {
+.down-vote-btn {
   background-image: url("assets/downvote.svg");
   background-repeat: no-repeat;
-  height: 25px !important;
+  height: 25px;
   width: 25px;
   margin: 0px 10px;
   border: none;
 }
-.down-vote:hover{
+.down-vote-btn:hover{
   background-image: url("assets/downvote-hover.svg");
 }
 
