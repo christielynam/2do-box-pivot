@@ -23,7 +23,7 @@ header {
   margin: 0;
   padding: 20px;
   color: #00A79D;
-  font-size: 45px;
+  font-size: 50px;
   text-align: center;
 }
 
@@ -52,11 +52,6 @@ header {
   resize: none;
 }
 
-.filter-input {
-  /*height: 40px;*/
-  margin: 20px auto;
-}
-
 .save-btn,
 .show-completed-btn,
 .show-more-btn {
@@ -66,8 +61,13 @@ header {
   background-color: #00A79D;
   color: #FFFFFF;
   margin: 10px auto;
-  font-size: 20px;
+  font-size: 18px;
   outline: none;
+}
+
+.filter-input,
+.show-more-btn {
+  margin: 20px auto;
 }
 
 .show-completed-btn {
@@ -91,11 +91,14 @@ header {
   justify-content: space-between;
   margin: auto;
 }
+
 .importance-btn {
   height: 40px;
   width: 100px;
+  border: none;
   background-color: #E5F3F2;
   color: #6D6E71;
+  font-size: 16px;
 }
 
 .todo-container {
@@ -106,16 +109,30 @@ header {
 
 .todo-card {
   width: 60%;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #D1D3D4;
+}
+
+.card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .task-content {
+  margin: 10px 0;
+  padding: 3px;
   color: #939598;
-  margin-top: 0px;
+  font-size: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #importance,
 .importance-level {
   color: #6D6E71;
+  font-size: 18px;
 }
 
 .card-top {
@@ -131,9 +148,9 @@ header {
 }
 
 button {
-  border: none;
   background-color: transparent;
   cursor: pointer;
+  outline: none;
 }
 
 .complete-btn,
@@ -157,6 +174,15 @@ button {
   background-image: url('assets/verify-circular-black-button-symbol.svg');
   background-size: contain;
   background-position: 20%;
+}
+
+.complete-btn:hover {
+  background-image: url('assets/verify-circular-black-button-symbol (1).svg');
+}
+
+.complete-btn:active {
+  background-image: url('assets/verify-circular-black-button-symbol (2).svg');
+  /*outline: none;*/
 }
 
 .delete-btn {
