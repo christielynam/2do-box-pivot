@@ -81,6 +81,7 @@ function buildNewCard(newToDo){
   var todo = `<article class="todo-card" id="${newToDo.id}">
         <div class="card-top">
           <h2 class="card-title" contenteditable="true">${newToDo.title}</h2>
+          <button class="complete-btn"></button>
           <button class="delete-btn"></button>
         </div>
         <p class="task-content" contenteditable="true">${newToDo.task}</p>
