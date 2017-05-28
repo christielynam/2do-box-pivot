@@ -140,11 +140,6 @@ function changeImportance(){
   });
 
 
-
-  //console.log($(this).parents('.todo-card').find('.importance-level')[0]);
-
-
-
   addToLocal();
 }
 
