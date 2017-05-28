@@ -133,25 +133,35 @@ header {
 button {
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
-.compete-btn {
+.complete-btn,
+.delete-btn,
+.up-vote-btn,
+.down-vote-btn {
   height: 25px;
   width: 25px;
-  background-image: url('assets/verify-circular-black-button-symbol.svg');
   background-repeat: no-repeat;
-  align-self: center;
   border: none;
+}
 
+.complete-btn,
+.delete-btn {
+  margin-top: 22px;
+}
+
+.complete-btn {
+  height: 22px;
+  width: 22px;
+  background-image: url('assets/verify-circular-black-button-symbol.svg');
+  background-size: contain;
+  background-position: 20%;
 }
 
 .delete-btn {
-  height: 25px;
-  width: 25px;
+  margin-left: 15px;
   background-image: url('assets/delete.svg');
-  background-repeat: no-repeat;
-  align-self: center;
-  border: none;
 }
 
 .delete-btn:hover {
@@ -160,23 +170,21 @@ button {
 
 .up-vote-btn {
   background-image: url("assets/upvote.svg");
-  border: none;
-  height: 25px;
-  width: 25px;
-  background-repeat: no-repeat;
 }
+
 .up-vote-btn:hover {
   background-image: url("assets/upvote-hover.svg");
 }
 
 .down-vote-btn {
-  background-image: url("assets/downvote.svg");
-  background-repeat: no-repeat;
   height: 25px;
   width: 25px;
-  margin: 0px 10px;
+  background-image: url("assets/downvote.svg");
+  background-repeat: no-repeat;
+  margin: 0px 15px;
   border: none;
 }
+
 .down-vote-btn:hover{
   background-image: url("assets/downvote-hover.svg");
 }
