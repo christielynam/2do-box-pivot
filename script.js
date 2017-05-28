@@ -1,4 +1,4 @@
-
+// NEED TO REMOVE GLOBAL VARS
 var toDoArray = [];
 var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
 
