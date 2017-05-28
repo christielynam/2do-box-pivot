@@ -1,6 +1,6 @@
 
-var toDoList = $('.todo-container');
 var toDoArray = [];
+var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
 
 $(document).on('input', function() {
   enableSaveButton();
@@ -23,18 +23,39 @@ $('.save-btn').on('click', function() {
 });
 
 //Up-Vote Event
-$('.todo-container').on('click', '.up-vote-btn', function() {
-  upvote();
-});
+$('.todo-container').on('click', '.up-vote-btn', changeImportance);
 
 //Down-Vote Event
-$('.todo-container').on('click', '.down-vote-btn', function() {
-  downvote();
-  addToLocal();
-});
+$('.todo-container').on('click', '.down-vote-btn', changeImportance);
 
 //Delete idea cards from DOM and localStorage
 $('.todo-container').on('click', '.delete-btn', deleteToDo);
+
+$('.filter-input').on('input keydown', search);
+
+$('.todo-container').on('blur input keydown', '.card-title', updateCardContent);
+
+$('.todo-container').on('blur input keydown', '.task-content', updateCardContent);
+
+function updateCardContent(event){
+  if(event.keyCode == 13 || event.type == 'focusout')
+  {
+      //console.log('this', $(this));
+      //console.log('target', $(event.target));
+      var cardToUpdate = $(event.target).closest('.todo-card')[0];
+      //console.log('target', event.target);
+      toDoArray.forEach(function(todo){
+        if(cardToUpdate.id == todo.id && event.target.className == 'card-title'){
+          todo.title = $(event.target).text();
+        }
+        if(cardToUpdate.id == todo.id && event.target.className == 'task-content'){
+          todo.task = $(event.target).text();
+        }
+      });
+      addToLocal();
+      $('.title-input').focus();
+  }
+}
 
 function deleteToDo(){
   var card = $(this).closest('.todo-card')[0];
@@ -59,20 +80,18 @@ function ToDo(id, title, task){
 function buildNewCard(newToDo){
   var todo = `<article class="todo-card" id="${newToDo.id}">
         <div class="card-top">
-          <h2 class="card-title">${newToDo.title}</h2>
+          <h2 class="card-title" contenteditable="true">${newToDo.title}</h2>
           <button class="delete-btn"></button>
         </div>
-        <p class="task-content">${newToDo.task}</p>
+        <p class="task-content" contenteditable="true">${newToDo.task}</p>
         <div class="card-bottom">
           <button class="up-vote-btn"></button>
           <button class="down-vote-btn"></button>
-          <p id="importance">importance: <span class="importance-level">${newToDo.importnace}</span></p>
+          <p id="importance">importance: <span class="importance-level">${newToDo.importance}</span></p>
         </div>
       </article>`;
-
   $('.todo-container').prepend(todo);
-  // toDoArray.push(todo);
-  };
+};
 
 //add object to localStorage function
 function addToLocal(){
@@ -88,43 +107,71 @@ function addToLocal(){
       console.log(todo);
       buildNewCard(todo);
   })
-  
+
 };
 
 //upvote button function
-function upvote(){
-  var importanceLevel = $('.importance-level')
-  if (importanceLevel.text() === 'swill'){
-    importanceLevel.text('plausible');
-  }else if (importanceLevel.text() === 'plausible'){
-    importanceLevel.text('genius');
+function changeImportance(){
+
+  var card = $(event.target).closest('.todo-card')[0];
+  var changer;
+
+  if(event.target.className == 'up-vote-btn'){
+    changer = 1;
+  } else {
+    changer = -1;
   }
+
+   toDoArray.forEach(function(todo, index){
+    if (todo.id == card.id) {
+      var currIndex = importanceArray.indexOf(todo.importance);
+      //console.log('currindex', currIndex);
+
+      if(currIndex == 0 && changer == -1){
+        currIndex++;
+      }
+      if(currIndex == importanceArray.length-1 && changer == 1){
+        currIndex--;
+      }
+
+      todo.importance = importanceArray[currIndex + changer];
+      $(event.target).parents('.todo-card').find('.importance-level')[0].textContent = todo.importance;
+    }
+  });
+
+
+
+  //console.log($(this).parents('.todo-card').find('.importance-level')[0]);
+
+
+
+  addToLocal();
 }
 
 //downvote button function
-function downvote(){
+function downVote(){
   var importanceLevel = $('.importance-level')
   if (importanceLevel.text() === 'genius'){
     importanceLevel.text('plausible')
   }else if (importanceLevel.text() === 'plausible'){
     importanceLevel.text('swill')
   }
+  addToLocal();
 }
 
 //Search Bar Function
-// function search() {
-//   var inputText = $('.search-input').val().toUpperCase();
-//   var hideArray = ideaArray.filter(function(idea){
-//     if (IdeaConstructor.title.toUpperCase().indexOf(inputText) < 0 && IdeaConstructo.body.toUpperCase().indexOf(inputText) < 0) {
-//       return idea;
-//     } else {
-//       $('#' + idea.id).closest('.box').css('display', 'block');
-//     }
-//   });
-//   hideArray.forEach(function(idea) {
-//     $('#' + idea.id).closest('.box').css('display', 'none');
-//   });
-// }
+function search() {
+  var inputText = $('.filter-input').val().toUpperCase();
+  var filteredArray = toDoArray.filter(function(todo){
+    if ((todo.title.toUpperCase().indexOf(inputText) !== -1) || (todo.task.toUpperCase().indexOf(inputText) !== -1)) {
+      return true;
+    }
+  });
+  $('.todo-container').empty();
+  filteredArray.forEach(function(todo) {
+    buildNewCard(todo);
+  });
+}
 
 //enable the save button function
 function enableSaveButton()  {
