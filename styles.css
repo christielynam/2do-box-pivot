@@ -53,10 +53,10 @@ header {
 }
 
 .toggle-complete-btns {
-  display: flex;
-  flex-direction: row;
   width: 60%;
-  align-self: center;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
 }
 
 .save-btn,
@@ -78,10 +78,9 @@ header {
   margin: 20px auto;
 }
 
-/* How can we push buttons to left and right to align with others? */
 .show-completed-btn,
 .hide-completed-btn {
-  margin-bottom: 20px;
+  margin: 10px 0 20px;
   width: 45%;
 }
 
