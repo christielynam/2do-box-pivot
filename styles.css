@@ -52,8 +52,16 @@ header {
   resize: none;
 }
 
+.toggle-complete-btns {
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  align-self: center;
+}
+
 .save-btn,
 .show-completed-btn,
+.hide-completed-btn,
 .show-more-btn {
   height: 40px;
   width: 60%;
@@ -70,12 +78,16 @@ header {
   margin: 20px auto;
 }
 
-.show-completed-btn {
+/* How can we push buttons to left and right to align with others? */
+.show-completed-btn,
+.hide-completed-btn {
   margin-bottom: 20px;
+  width: 45%;
 }
 
 .save-btn:hover,
-.show-completed-btn:hover {
+.show-completed-btn:hover,
+.hide-completed-btn:hover {
   background-color: #045E55;
 }
 
@@ -111,6 +123,10 @@ header {
   width: 60%;
   padding-bottom: 20px;
   border-bottom: 2px solid #D1D3D4;
+}
+
+.todo-card-complete {
+  background-color: #a4b3ba;
 }
 
 .card-title {
@@ -215,7 +231,18 @@ button {
   background-image: url("assets/downvote-hover.svg");
 }
 
+.flash {
+   animation-name: flash;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in; // or linear
+    animation-iteration-count: 1; //infinite or number
+    animation-direction: normal; //alternate
+    animation-play-state: running;
+}
 
+@keyframes flash {
+   0% { opacity: 0; }
+}
 
 /*******************************
          media query @ 450px
