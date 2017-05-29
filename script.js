@@ -28,6 +28,11 @@ $('.todo-container').on('click', '.up-vote-btn', changeImportance);
 //Down-Vote Event
 $('.todo-container').on('click', '.down-vote-btn', changeImportance);
 
+$(document).on('click', '.show-completed-btn', showCompletedToDos);
+$(document).on('click', '.hide-completed-btn', hideCompletedToDos)
+
+$('.todo-container').on('click', '.complete-btn', toggleComplete);
+
 //Delete idea cards from DOM and localStorage
 $('.todo-container').on('click', '.delete-btn', deleteToDo);
 
@@ -43,18 +48,61 @@ function updateCardContent(event){
       //console.log('this', $(this));
       //console.log('target', $(event.target));
       var cardToUpdate = $(event.target).closest('.todo-card')[0];
+      var propertyToUpdate = $(event.target).data("role"); //this snags the role off the data-role in html
+      console.log('role:', propertyToUpdate);
       //console.log('target', event.target);
       toDoArray.forEach(function(todo){
-        if(cardToUpdate.id == todo.id && event.target.className == 'card-title'){
-          todo.title = $(event.target).text();
+        if(cardToUpdate.id == todo.id){
+          todo[propertyToUpdate] = $(event.target).text();
         }
-        if(cardToUpdate.id == todo.id && event.target.className == 'task-content'){
-          todo.task = $(event.target).text();
-        }
+        // if(cardToUpdate.id == todo.id && event.target.className == 'task-content'){
+        //   todo[propertyToUpdate] = $(event.target).text();
+        // }
       });
       addToLocal();
       $('.title-input').focus();
   }
+}
+
+function showCompletedToDos() {
+  //destroy
+  $('.todo-container').empty();
+  // this resorts the array and pushes all completed todos to front
+  toDoArray.sort(function(x, y) {
+    if (x.complete === y.complete){
+      return 0; //
+    } else if (x.complete) {
+      return 1; //
+    } else {
+      return -1; //
+    }
+    // this is the same...in shorthand...notice the x? this is the 2nd if
+    //return (x === y)? 0 : x? -1 : 1;
+  });
+  toDoArray.forEach(function(todo) {
+    buildNewCard(todo);
+  });
+};
+
+function hideCompletedToDos() {
+  // destroy
+  $('.todo-container').empty();
+  toDoArray.forEach(function(todo){
+    if (!todo.complete){
+      buildNewCard(todo);
+    }
+  });
+}
+
+function toggleComplete() {
+  var card = event.target.closest('.todo-card');
+  toDoArray.forEach(function(todo){
+    if (todo.id == card.id) {
+      todo.complete = !todo.complete
+    }
+  });
+  card.classList.toggle('todo-card-complete');
+  addToLocal();
 }
 
 function deleteToDo(){
@@ -74,22 +122,26 @@ function ToDo(id, title, task){
   this.title = title;
   this.task = task;
   this.importance = "normal";
+  this.complete = false;
 }
 
 //build a Card
 function buildNewCard(newToDo){
-  var todo = `<article class="todo-card" id="${newToDo.id}">
+
+  var completeClass = (newToDo.complete)? "todo-card-complete" : "";
+
+  var todo = `<article class="todo-card ${completeClass}" id="${newToDo.id}">
         <div class="card-top">
-          <h2 class="card-title" contenteditable="true">${newToDo.title}</h2>
+          <h2 class="card-title" data-role="title" contenteditable="true">${newToDo.title}</h2>
           <div class="top-btn-container">
             <button class="complete-btn"></button>
             <button class="delete-btn"></button>
           </div>
         </div>
-        <p class="task-content" contenteditable="true">${newToDo.task}</p>
+        <p class="task-content" data-role="task" contenteditable="true">${newToDo.task}</p>
         <div class="card-bottom">
-          <button class="up-vote-btn"></button>
-          <button class="down-vote-btn"></button>
+          <button class="up-vote-btn" data-changer="1"></button>
+          <button class="down-vote-btn" data-changer="-1"></button>
           <p id="importance">importance: <span class="importance-level">${newToDo.importance}</span></p>
         </div>
       </article>`;
@@ -107,8 +159,10 @@ function addToLocal(){
   function retrieveLocalStorage() {
     toDoArray = JSON.parse(localStorage.getItem('toDoArray')) || [];
     toDoArray.forEach(function(todo) {
-      console.log(todo);
-      buildNewCard(todo);
+      // exempt cards that are marked complete
+      if (!todo.complete) {
+        buildNewCard(todo);
+      }
   })
 
 };
@@ -117,13 +171,14 @@ function addToLocal(){
 function changeImportance(){
 
   var card = $(event.target).closest('.todo-card')[0];
-  var changer;
+  var changer = $(event.target).data("changer");
+  console.log('changer', changer);
 
-  if(event.target.className == 'up-vote-btn'){
-    changer = 1;
-  } else {
-    changer = -1;
-  }
+  // if(event.target.className == 'up-vote-btn'){
+  //   changer = 1;
+  // } else {
+  //   changer = -1;
+  // }
 
    toDoArray.forEach(function(todo, index){
     if (todo.id == card.id) {
@@ -138,12 +193,22 @@ function changeImportance(){
       }
 
       todo.importance = importanceArray[currIndex + changer];
-      $(event.target).parents('.todo-card').find('.importance-level')[0].textContent = todo.importance;
+      var domLabel = $(event.target).parents('.todo-card').find('.importance-level')[0]
+      // console.log('domlabel', domLabel);
+      domLabel.innerText = todo.importance;
+      flashText(domLabel);
     }
   });
 
 
   addToLocal();
+}
+
+// this function flashes the new importance dom label
+function flashText(elementToFlash){
+  elementToFlash.classList.remove('flash');
+  void elementToFlash.offsetWidth;
+  elementToFlash.classList.add('flash');
 }
 
 //downvote button function
