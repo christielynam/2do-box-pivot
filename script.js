@@ -222,6 +222,20 @@ function downVote(){
   addToLocal();
 }
 
+// Filter importanceLevel
+$('.filter-btn-container').on('click', '.importance-btn', filterImportance);
+
+
+function filterImportance() {
+  var importance = $(this).text();
+  $('.todo-container').empty();
+  toDoArray.forEach(function(todo, index) {
+    if (importance === todo.importance && !todo.complete) {
+      buildNewCard(todo);
+    }
+  })
+}
+
 //Search Bar Function
 function search() {
   var inputText = $('.filter-input').val().toUpperCase();
