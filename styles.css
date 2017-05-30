@@ -3,7 +3,8 @@
 }
 
 .body,
-.importance-level {
+.importance-level,
+.task-content {
   font-family: 'Open Sans', sans-serif;
 }
 
