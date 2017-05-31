@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 .body,
 .importance-level,
 .task-content {
@@ -87,12 +92,13 @@ header {
 
 .save-btn:hover,
 .show-completed-btn:hover,
-.clear-filter-btn:hover {
+.clear-filter-btn:hover,
+.show-more-btn:hover {
   background-color: #045E55;
 }
 
 .save-btn:disabled {
-  background-color: #6D6E71;
+  background-color: #C2C3C5;
 }
 
 .filter-container {
@@ -134,9 +140,14 @@ header {
   border-bottom: 2px solid #D1D3D4;
 }
 
-.todo-card-complete {
-  background-color: #a4b3ba;
+
+.completed {
+  text-decoration: line-through;
 }
+
+/*.todo-card-complete {
+  background-color: #D1D3D4;
+}*/
 
 .card-title {
   overflow: hidden;
@@ -205,9 +216,8 @@ button {
   background-image: url('assets/verify-circular-black-button-symbol (1).svg');
 }
 
-.complete-btn:active {
+.complete-active {
   background-image: url('assets/verify-circular-black-button-symbol (2).svg');
-  /*outline: none;*/
 }
 
 .delete-btn {
@@ -253,41 +263,40 @@ button {
    0% { opacity: 0; }
 }
 
-/*******************************
-         media query @ 450px
-*******************************/
+/*media queries*/
 
-@media (max-width: 450px) {
-
-  .header {
-    height: 60vh;
+@media screen and (max-width: 850px) {
+  .importance-btn {
+    width: 75px;
   }
+}
 
+@media screen and (max-width: 650px) {
   .title-input,
-  .filter-input {
+  .task-input,
+  .save-btn,
+  .filter-input,
+  .toggle-complete-btns,
+  .filter-btn-container,
+  .todo-card,
+  .show-more-btn {
     width: 80%;
-    height: 10%;
-    margin-top: 10px;
   }
+}
 
-
-  .body-input {
-    width: 80%;
-    height: 30%;
-    align-items: flex-start;
+@media screen and (max-width: 500px) {
+  .task-input {
+    height: 150px;
   }
-
-  .save-button {
-    width: 80%;
-    height: 10%
-    margin-top: 10px;
+  .toggle-complete-btns {
+    display: flex;
+    flex-direction: column;
   }
-
-  .filter-input {
-    height: 10%;
+  .show-completed-btn,
+  .clear-filter-btn {
+    width: 100%;
   }
-
-  .idea-card {
-    width: 80%
+  .importance-btn {
+    width: 65px;
   }
 }

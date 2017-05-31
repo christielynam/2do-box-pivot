@@ -97,12 +97,17 @@ function showMoreToDos() {
 
 function toggleComplete() {
   var card = event.target.closest('.todo-card');
+  var title = $(this).closest('.todo-card').find('.card-title');
+  var task = $(this).closest('.todo-card').find('.task-content');
   toDoArray.forEach(function(todo){
     if (todo.id == card.id) {
       todo.complete = !todo.complete
     }
   });
-  card.classList.toggle('todo-card-complete');
+  $(this).toggleClass('complete-active')
+  title.toggleClass('completed');
+  task.toggleClass('completed');
+  // card.classList.toggle('todo-card-complete');
   addToLocal();
 }
 
