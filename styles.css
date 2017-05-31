@@ -53,14 +53,14 @@ header {
 }
 
 .save-btn,
-.show-completed-btn,
+.show-all-btn,
 .show-more-btn {
   height: 40px;
   width: 60%;
+  margin: 10px auto;
   border: none;
   background-color: #00A79D;
   color: #FFFFFF;
-  margin: 10px auto;
   font-size: 18px;
   outline: none;
 }
@@ -70,12 +70,12 @@ header {
   margin: 20px auto;
 }
 
-.show-completed-btn {
+.show-all-btn {
   margin-bottom: 20px;
 }
 
 .save-btn:hover,
-.show-completed-btn:hover,
+.show-all-btn:hover,
 .clear-filter-btn:hover,
 .show-more-btn:hover {
   background-color: #045E55;
@@ -129,21 +129,14 @@ header {
 .todo-container {
   width: 100%;
   display: flex;
-  align-items: center; flex-direction: column;
+  align-items: center;
+  flex-direction: column;
 }
 
 .todo-card {
   width: 60%;
   padding-bottom: 20px;
   border-bottom: 2px solid #D1D3D4;
-}
-
-.completed {
-  position: absolute;
-  width: 100%;
-  border-top: 3px solid #00A79D;
-  left: 0;
-  top: 50%;
 }
 
 .card-title {
@@ -153,23 +146,17 @@ header {
 }
 
 .task-content {
+  display: inline;
   margin: 10px 0;
   color: #939598;
   font-size: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: inline;
 }
 
 .card-title,
 .task-content {
   position: relative;
-}
-
-#importance,
-.importance-level {
-  color: #6D6E71;
-  font-size: 18px;
 }
 
 .card-top {
@@ -179,9 +166,23 @@ header {
 }
 
 .card-bottom {
+  width: 100%;
   display: flex;
   align-items: center;
+}
+
+.completed {
   width: 100%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  border-top: 3px solid #00A79D;
+}
+
+#importance,
+.importance-level {
+  color: #6D6E71;
+  font-size: 18px;
 }
 
 button {
@@ -248,12 +249,12 @@ button {
 }
 
 .flash {
-   animation-name: flash;
-    animation-duration: 0.5s;
-    animation-timing-function: ease-in; // or linear
-    animation-iteration-count: 1; //infinite or number
-    animation-direction: normal; //alternate
-    animation-play-state: running;
+  animation-name: flash;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-play-state: running;
 }
 
 @keyframes flash {
@@ -279,7 +280,7 @@ button {
   .title-input,
   .task-input,
   .save-btn,
-  .show-completed-btn,
+  .show-all-btn,
   .filter-input,
   .filter-btn-container,
   .todo-card,
