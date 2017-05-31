@@ -134,17 +134,19 @@ function ToDo(id, title, task){
 //build a Card
 function buildNewCard(newToDo){
 
-  var completeClass = (newToDo.complete)? "todo-card-complete" : "";
+  var strikethrough = (newToDo.complete)? "completed" : "";
+  var activeCheckMark = (newToDo.complete)? "complete-active" : "";
 
-  var todo = `<article class="todo-card ${completeClass}" id="${newToDo.id}">
+
+  var todo = `<article class="todo-card" id="${newToDo.id}">
         <div class="card-top">
-          <h2 class="card-title" data-role="title" contenteditable="true">${newToDo.title}</h2>
+          <h2 class="card-title ${strikethrough}" data-role="title" contenteditable="true">${newToDo.title}</h2>
           <div class="top-btn-container">
-            <button class="complete-btn"></button>
+            <button class="complete-btn ${activeCheckMark}"></button>
             <button class="delete-btn"></button>
           </div>
         </div>
-        <p class="task-content" data-role="task" contenteditable="true">${newToDo.task}</p>
+        <p class="task-content ${strikethrough}" data-role="task" contenteditable="true">${newToDo.task}</p>
         <div class="card-bottom">
           <button class="up-vote-btn" data-changer="1"></button>
           <button class="down-vote-btn" data-changer="-1"></button>
