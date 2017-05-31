@@ -40,10 +40,9 @@ header {
 .title-input,
 .task-input,
 .filter-input {
-  height: 40px;
   width: 60%;
   margin: 10px auto;
-  padding-left: 5px;
+  padding: 10px;
   border: 2px solid #D1D3D4;
   color: #939598;
   font-size: 20px;
@@ -51,11 +50,6 @@ header {
 
 .title-input {
   margin-top: 0;
-}
-
-.task-input {
-  padding-top: 7px;
-  resize: none;
 }
 
 .toggle-complete-btns {
@@ -128,6 +122,11 @@ header {
   color: #FFFFFF;
 }
 
+.importance-active {
+  background-color:#00A79D;
+  color: #FFFFFF;
+}
+
 .todo-container {
   width: 100%;
   display: flex;
@@ -142,12 +141,12 @@ header {
 
 
 .completed {
-  text-decoration: line-through;
+  position: absolute;
+  width: 100%;
+  border-top: 3px solid #00A79D;
+  left: 0;
+  top: 50%;
 }
-
-/*.todo-card-complete {
-  background-color: #D1D3D4;
-}*/
 
 .card-title {
   overflow: hidden;
@@ -157,12 +156,16 @@ header {
 
 .task-content {
   margin: 10px 0;
-  padding: 3px;
   color: #939598;
   font-size: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  display: inline;
+}
+
+.card-title,
+.task-content {
+  position: relative;
 }
 
 #importance,
@@ -285,9 +288,6 @@ button {
 }
 
 @media screen and (max-width: 500px) {
-  .task-input {
-    height: 150px;
-  }
   .toggle-complete-btns {
     display: flex;
     flex-direction: column;
@@ -295,6 +295,9 @@ button {
   .show-completed-btn,
   .clear-filter-btn {
     width: 100%;
+  }
+  .show-completed-btn {
+    margin-bottom: 10px;
   }
   .importance-btn {
     width: 65px;

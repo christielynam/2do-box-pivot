@@ -105,9 +105,9 @@ function toggleComplete() {
     }
   });
   $(this).toggleClass('complete-active')
-  title.toggleClass('completed');
-  task.toggleClass('completed');
-  // card.classList.toggle('todo-card-complete');
+
+  title.children('.strikeMe').toggleClass('completed');
+  task.children('.strikeMe').toggleClass('completed');
   addToLocal();
 }
 
@@ -140,13 +140,13 @@ function buildNewCard(newToDo){
 
   var todo = `<article class="todo-card" id="${newToDo.id}">
         <div class="card-top">
-          <h2 class="card-title ${strikethrough}" data-role="title" contenteditable="true">${newToDo.title}</h2>
+          <h2 class="card-title" data-role="title" contenteditable="true">${newToDo.title}<span class="strikeMe ${strikethrough}"></span></h2>
           <div class="top-btn-container">
             <button class="complete-btn ${activeCheckMark}"></button>
             <button class="delete-btn"></button>
           </div>
         </div>
-        <p class="task-content ${strikethrough}" data-role="task" contenteditable="true">${newToDo.task}</p>
+        <p class="task-content" data-role="task" contenteditable="true">${newToDo.task}<span class="strikeMe ${strikethrough}"></span></p>
         <div class="card-bottom">
           <button class="up-vote-btn" data-changer="1"></button>
           <button class="down-vote-btn" data-changer="-1"></button>
@@ -213,7 +213,9 @@ function filterImportance() {
     if (importance === todo.importance && !todo.complete) {
       $('.todo-container').append(buildNewCard(todo));
     }
-  })
+  });
+  reset();
+  $(this).addClass('importance-active');
 }
 
 //Search Bar Function
@@ -255,4 +257,5 @@ function reset(){
   $('.filter-input').val('');
   // $('.save-btn').prop('disabled', true);
   $('.title-input').focus();
+  $('.importance-btn').removeClass('importance-active');
 }
