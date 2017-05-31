@@ -62,7 +62,7 @@ header {
 
 .save-btn,
 .show-completed-btn,
-.hide-completed-btn,
+.clear-filter-btn,
 .show-more-btn {
   height: 40px;
   width: 60%;
@@ -80,15 +80,19 @@ header {
 }
 
 .show-completed-btn,
-.hide-completed-btn {
+.clear-filter-btn {
   margin: 10px 0 20px;
   width: 45%;
 }
 
 .save-btn:hover,
 .show-completed-btn:hover,
-.hide-completed-btn:hover {
+.clear-filter-btn:hover {
   background-color: #045E55;
+}
+
+.save-btn:disabled {
+  background-color: #6D6E71;
 }
 
 .filter-container {
@@ -111,6 +115,11 @@ header {
   background-color: #E5F3F2;
   color: #6D6E71;
   font-size: 16px;
+}
+
+.importance-btn:hover {
+  background-color: #045E55;
+  color: #FFFFFF;
 }
 
 .todo-container {
