@@ -77,12 +77,14 @@ function showToDos(status, count) {
 
 function showAllToDos() {
   $('.todo-container').empty();
+  $('.importance-btn').removeClass('importance-active');
   showToDos(true);
   showToDos(false);
 }
 
 function showMoreToDos() {
   $('.todo-container').empty();
+  $('.importance-btn').removeClass('importance-active');
   showToDos(false);
 }
 

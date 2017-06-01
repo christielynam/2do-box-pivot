@@ -1,15 +1,42 @@
-# ideabox
+# 2Do Box Pivot by Christie Lynam & Nick Svetnicka for Turing
 
-This is a website to organize ideas.
+![ScreenShot of App](assets/_ss.png?raw=true "ScreenShot of App")
 
-## Usage
+## Introduction
 
-This webpage is designed for the user to store and edit ideas. They are stored with a title of the idea and with the body or description of the idea. The quality of the the idea can then be modified to display if it's a good idea(plausible), a shit idea(swill) or an excellent idea(genius). The user can add as many ideas as they can. And when they want to come back to an idea, the webpage stores their ideas.
-
-The contents of the idea are stored in the local storage for the user. For this to be possible, the contents must be put into a string to be stored. For the values of the idea to be returned accurately and correctly, first we spliced the ID from the array. From there, we could bring back the title and body of the idea and place them back into the idea card. Unfortunately we were unable to return the quality of the idea.
-
-Another aspect of the project we were unable to finish, was the search bar. For the creative users with countless ideas at their disposal, they could search through the webpage for the idea they wished to edit or check. 
+> This application can be used to keep track of your todo's. It requires a title and task to make a todo. Other functionality includes changing the importance level of a todo, marking a todo as complete (which will hide it, but will not be deleted), the ability to search for text in any existing todo, and an option to remove the todo completely.
 
 ## Credits
 
- Developed by Erik Ingvalson and Jack Mallahan
+> Forked from Idea Box Developed by Erik Ingvalson and Jack Mallahan
+
+## Features
+
+* A todo title and description can be used to create a new todo.
+
+* Validation exists to ensure both fields are supplied.
+
+* A show-all button exists to display the completed todos.
+
+* Using the filter box, you can search for any text within the title or the description, which will be displayed immediately on entering search terms.
+
+* 5 importance levels exist for each todo, which can be adjusted and filtered against.
+
+* The Clear Filters button will remove any search criteria or importance filtering.
+
+* A checkmark exists to mark a todo as complete, which will be displayed as a strikethrough (wont be deleted)
+
+* Delete button can be used to completely remove a todo.
+
+## Built With
+
+* HTML
+* CSS
+* JavaScript
+* JQuery
+
+## Team
+
+> Christie Lynam
+
+> Nick Svetnicka
