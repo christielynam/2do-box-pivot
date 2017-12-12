@@ -1,5 +1,5 @@
 
-$(document).ready(function() {
+$(document).ready(function () {
   showToDos(false, 10);
   reset();
 });
@@ -31,8 +31,8 @@ function ToDo(id, title, task) {
 }
 
 function buildNewCard(newToDo) {
-  var strikethrough = (newToDo.complete)? "completed" : "";
-  var activeCheckMark = (newToDo.complete)? "complete-active" : "";
+  var strikethrough = (newToDo.complete) ? "completed" : "";
+  var activeCheckMark = (newToDo.complete) ? "complete-active" : "";
   var todo = `<article class="todo-card" id="${newToDo.id}">
         <div class="card-top">
           <h2 class="card-title" data-role="title" contenteditable="true">${newToDo.title}<span class="strikeMe ${strikethrough}"></span></h2>
@@ -67,7 +67,7 @@ function showToDos(status, count) {
   if (!count) {
     count = toDoArray.length;
   }
-  toDoArray.forEach(function(todo) {
+  toDoArray.forEach(function (todo) {
     if (todo.complete === status && displayCount < count) {
       $('.todo-container').append(buildNewCard(todo));
       displayCount++;
@@ -89,8 +89,8 @@ function showMoreToDos() {
 }
 
 function enableSaveButton() {
-var title = $('.title-input').val();
-var task = $('.task-input').val();
+  var title = $('.title-input').val();
+  var task = $('.task-input').val();
   if (title === "" || task === "") {
     $('.save-btn').prop('disabled', true);
   } else {
@@ -114,7 +114,7 @@ function saveToDo() {
 function search() {
   var toDoArray = pullFromLocal();
   var inputText = $('.filter-input').val().toUpperCase();
-  var filteredArray = toDoArray.filter(function(todo) {
+  var filteredArray = toDoArray.filter(function (todo) {
     if ((todo.title.toUpperCase().indexOf(inputText) !== -1) || (todo.task.toUpperCase().indexOf(inputText) !== -1)) {
       return true;
     }
@@ -128,7 +128,7 @@ function showFilteredToDos(filteredArray, filterText) {
   if (filterText.length == 0) {
     showToDos(false, 10);
   } else {
-    filteredArray.forEach(function(todo) {
+    filteredArray.forEach(function (todo) {
       $('.todo-container').append(buildNewCard(todo));
     });
   }
@@ -138,7 +138,7 @@ function filterImportance() {
   var toDoArray = pullFromLocal();
   var importance = $(this).text();
   $('.todo-container').empty();
-  toDoArray.forEach(function(todo, index) {
+  toDoArray.forEach(function (todo, index) {
     if (importance === todo.importance && !todo.complete) {
       $('.todo-container').append(buildNewCard(todo));
     }
@@ -147,18 +147,18 @@ function filterImportance() {
   $(this).addClass('importance-active');
 }
 
-function updateCardContent(event){
+function updateCardContent(event) {
   var toDoArray = pullFromLocal();
-  if(event.keyCode == 13 || event.type == 'focusout') {
-      var cardToUpdate = $(event.target).closest('.todo-card')[0];
-      var propertyToUpdate = $(event.target).data('role');
-      toDoArray.forEach(function(todo) {
-        if(cardToUpdate.id == todo.id) {
-          todo[propertyToUpdate] = $(event.target).text();
-        }
-      });
-      addToLocal(toDoArray);
-      $('.title-input').focus();
+  if (event.keyCode == 13 || event.type == 'focusout') {
+    var cardToUpdate = $(event.target).closest('.todo-card')[0];
+    var propertyToUpdate = $(event.target).data('role');
+    toDoArray.forEach(function (todo) {
+      if (cardToUpdate.id == todo.id) {
+        todo[propertyToUpdate] = $(event.target).text();
+      }
+    });
+    addToLocal(toDoArray);
+    $('.title-input').focus();
   }
 }
 
@@ -167,7 +167,7 @@ function toggleComplete() {
   var card = event.target.closest('.todo-card');
   var title = $(card).find('.card-title');
   var task = $(card).find('.task-content');
-  toDoArray.forEach(function(todo) {
+  toDoArray.forEach(function (todo) {
     if (todo.id == card.id) {
       todo.complete = !todo.complete
     }
@@ -181,7 +181,7 @@ function toggleComplete() {
 function deleteToDo() {
   var toDoArray = pullFromLocal();
   var card = $(this).closest('.todo-card')[0];
-   toDoArray.forEach(function(todo, index) {
+  toDoArray.forEach(function (todo, index) {
     if (todo.id == card.id) {
       toDoArray.splice(index, 1);
     }
@@ -196,13 +196,13 @@ function changeImportance() {
   var card = $(event.target).closest('.todo-card')[0];
   var changer = $(event.target).data("changer");
 
-   toDoArray.forEach(function(todo, index) {
+  toDoArray.forEach(function (todo, index) {
     if (todo.id == card.id) {
       var currIndex = importanceArray.indexOf(todo.importance);
-      if(currIndex == 0 && changer == -1) {
+      if (currIndex == 0 && changer == -1) {
         currIndex++;
       }
-      if(currIndex == importanceArray.length - 1 && changer == 1) {
+      if (currIndex == importanceArray.length - 1 && changer == 1) {
         currIndex--;
       }
       todo.importance = importanceArray[currIndex + changer];
@@ -230,7 +230,7 @@ function clearFilters() {
   reset();
 }
 
-function reset(){
+function reset() {
   $('.title-input').val('');
   $('.task-input').val('');
   $('.filter-input').val('');

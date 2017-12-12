@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link href="normalize.css" type="text/css" rel="stylesheet">
-    <link href="styles.css" type="text/css" rel="stylesheet">
-    <title>2DoBox</title>
-  </head>
-  <body>
-    <header>
-      <h1 class="title">2Do<span class="box">Box</span></h1>
-      <input aria-label="input for ToDo title" class="title-input" placeholder="Title"/>
-      <input aria-label="input for ToDo task" class="task-input" placeholder="Task"/>
-      <button class="save-btn" disabled="true">save</button>
-      <button class="show-all-btn">show all ToDos</button>
-    </header>
-    <section class="filter-container">
-      <input aria-label="input for ToDo search filter" class="filter-input" placeholder="Filter" />
-      <div class="filter-btn-container">
-        <button class="importance-btn" type="button" name="button">critical</button>
-        <button class="importance-btn" type="button" name="button">high</button>
-        <button class="importance-btn" type="button" name="button">normal</button>
-        <button class="importance-btn" type="button" name="button">low</button>
-        <button class="importance-btn" type="button" name="button">none</button>
-        <button class="clear-filter-btn" type="button" name="button">clear filters</button>
-      </div>
-    </section>
-    <section role="main" class="todo-container"></section>
-    <button class="show-more-btn" type="button" name="show more ToDos button">show more ToDos...</button>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="path/to/your/jquery.min.js"><\/script>')</script>
-    <script src="script.js"></script>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="normalize.css" type="text/css" rel="stylesheet">
+  <link href="styles.css" type="text/css" rel="stylesheet">
+  <title>2DoBox</title>
+</head>
+
+<body>
+  <header>
+    <h1 class="title">2Do
+      <span class="box">Box</span>
+    </h1>
+    <input aria-label="input for ToDo title" class="title-input" placeholder="Title" />
+    <input aria-label="input for ToDo task" class="task-input" placeholder="Task" />
+    <button class="save-btn" disabled="true">save</button>
+    <button class="show-all-btn">show all ToDos</button>
+  </header>
+  <section class="filter-container">
+    <input aria-label="input for ToDo search filter" class="filter-input" placeholder="Filter" />
+    <div class="filter-btn-container">
+      <button class="importance-btn" type="button" name="button">critical</button>
+      <button class="importance-btn" type="button" name="button">high</button>
+      <button class="importance-btn" type="button" name="button">normal</button>
+      <button class="importance-btn" type="button" name="button">low</button>
+      <button class="importance-btn" type="button" name="button">none</button>
+      <button class="clear-filter-btn" type="button" name="button">clear filters</button>
+    </div>
+  </section>
+  <section role="main" class="todo-container"></section>
+  <button class="show-more-btn" type="button" name="show more ToDos button">show more ToDos...</button>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="path/to/your/jquery.min.js"><\/script>')</script>
+  <script src="script.js"></script>
+</body>
+
 </html>
